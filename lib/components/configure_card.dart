@@ -44,9 +44,9 @@ class _ConfigureCardState extends State<ConfigureCard> {
   @override
   Widget build(BuildContext context) {
     late final colorScheme = Theme.of(context).colorScheme;
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Center(
+    return Center(
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
           child: ConstrainedBox(
@@ -127,7 +127,7 @@ class _ConfigureCardState extends State<ConfigureCard> {
                             width: 3,
                           ),
                         ),
-      
+
                         errorText: _errorMessage,
                       ),
                       onChanged: _validateInput,

@@ -6,19 +6,26 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});
 
   static const Map<String, Color> _availableColors = {
-    'Blue': Colors.blue,
-    'Orange': Colors.orange,
     'Red': Colors.red,
+    'Orange': Colors.orange,
+    'Yellow': Colors.yellow,
     'Green': Colors.green,
+    'Blue': Colors.blue,
+    'Indigo': Colors.indigo,
     'Purple': Colors.purple,
-    'Teal': Colors.teal,
   };
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final currentColorSeed = themeProvider.seedColor;
+    final loadedSeedColor = themeProvider.seedColor;
+    Color? displayColor;
+
+    displayColor ??= _availableColors.values.firstWhere(
+      (color) => color.toARGB32() == loadedSeedColor.toARGB32(),
+      orElse: () => Colors.blue,
+    );
 
     void onChanged(Color? seedColor) {
       if (seedColor != null) {
@@ -53,6 +60,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: DropdownButton<Color>(
             padding: const EdgeInsets.all(10),
+            alignment: Alignment.center,
             style: TextStyle(
               color: colorScheme.onPrimary,
               fontWeight: FontWeight.w500,
@@ -67,7 +75,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )
                 .toList(),
             onChanged: onChanged,
-            value: currentColorSeed,
+            value: displayColor,
             underline: const SizedBox(),
             icon: const SizedBox(),
           ),
